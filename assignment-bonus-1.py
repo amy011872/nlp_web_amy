@@ -1,8 +1,6 @@
 # r10142008 周昕妤 
 # stream cloud link: https://amy011872-nlp-web-amy-assignment-bonus-1-z6ldel.streamlitapp.com/
 
-#import time
-#from click import progressbar
 import streamlit as st
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
