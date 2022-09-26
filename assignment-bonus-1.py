@@ -39,7 +39,7 @@ if choice == 'English version':
 
     with col1.form(key='snetiForm'):
         raw_text = st.text_area('Please enter a sentence here:')
-        btn = st.form_submit_button(label='Ａnalyze')
+        btn = st.form_submit_button(label='Analyze')
 
         if btn:
       #  progress_bar = st.progress(0)
