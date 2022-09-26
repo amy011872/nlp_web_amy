@@ -1,3 +1,4 @@
 [theme]
 primaryColor='#457b9d'
-secondaryColor="#a8dadc"
+backgroundColor="#a8dadc"
+secondaryBackgroundColor='#f1faee'
