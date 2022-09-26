@@ -5,6 +5,7 @@ import streamlit as st
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from snownlp import SnowNLP
+from datetime import datetime
 
 
 def vader_anaylze(rawText):
@@ -43,6 +44,7 @@ if choice == 'English version':
         if btn:
             with col2:
                 st.success("Finish analyzing!")
+                st.write(datetime.now())
                 st.markdown('### Results from different models:')
 
                 polarity = TextBlob(raw_text).sentiment.polarity
@@ -108,6 +110,7 @@ if choice == 'Chinese version':
         if btn:
             with col2:
                 st.success("Finish analyzing!")
+                st.write(datetime.now())
                 senti_score = snow_analyze(raw_text)
                 st.write('分數：', senti_score)
                 if senti_score > 0.5:
