@@ -42,11 +42,6 @@ if choice == 'English version':
         btn = st.form_submit_button(label='Analyze')
 
         if btn:
-      #  progress_bar = st.progress(0)
-       # for percent in range(100):
-        #    time.sleep(0.01)
-         #   progress_bar.progress(percent + 1)
-
             with col2:
                 st.success("Finish analyzing!")
                 st.markdown('### Results from different models:')
@@ -103,7 +98,7 @@ if choice == 'English version':
 
 if choice == 'Chinese version':
 
-    st.markdown('#### 歡迎使用中文版本！')
+    st.markdown('#### 歡迎使用中文版！')
     
     col1, col2 = st.columns(2)
 
@@ -118,8 +113,10 @@ if choice == 'Chinese version':
                 st.write('分數：', senti_score)
                 if senti_score > 0.5:
                     st.write('Sentiment: 正向！🥰')
+                    st.balloons()
                 elif senti_score < 0.5:
                     st.write('Sentiment: 負向 😭😭😭')
+                    st.snow()
                 else:
                     st.write('Sentiment: 中性 😶😶')
                 
