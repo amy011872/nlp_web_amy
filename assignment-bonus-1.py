@@ -37,7 +37,7 @@ if choice == 'English version':
     col1, col2 = st.columns(2)
 
     with col1.form(key='snetiForm'):
-        raw_text = st.text_area('Please enter a sentence here:')
+        raw_text = st.text_area('Please enter a sentence:')
         btn = st.form_submit_button(label='Analyze')
 
         if btn:
