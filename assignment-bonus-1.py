@@ -29,6 +29,7 @@ def snow_analyze(rawText):
     return senti_score
 
 st.markdown('# Welcome to my sentiment anaylsis app!')
+st.caption('Streamlit project r10142008 周昕妤')
 menu = ['English version', 'Chinese version']
 choice = st.sidebar.selectbox("Language", menu)
 
