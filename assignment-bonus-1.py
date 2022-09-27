@@ -30,7 +30,7 @@ def snow_analyze(rawText):
     return senti_score
 
 st.markdown('# Welcome to my sentiment anaylsis app!')
-st.caption('Streamlit project r10142008 周昕妤')
+st.caption('Streamlit project   r10142008 周昕妤')
 menu = ['English version', 'Chinese version']
 choice = st.sidebar.selectbox("Language", menu)
 
@@ -50,16 +50,20 @@ if choice == 'English version':
                 polarity = TextBlob(raw_text).sentiment.polarity
                 if polarity > 0:
                     st.markdown('Textblob: Positive 🥰')
+                    st.balloons()
                 elif polarity < 0:
                     st.markdown('Textblob: Negative 😭')
+                    st.snow()
                 else:
                     st.markdown('Textblob: Neutral 😶')    
 
                 pos_list, neg_list, neu_list, compound = vader_anaylze(raw_text)
                 if compound > 0:
                     st.markdown('vaderSentiment: Positive 🥰')
+                    st.balloons()
                 elif compound < 0:
                     st.markdown('vaderSentiment: Negative 😭')
+                    st.snow()
                 else:
                     st.markdown('vaderSentiment: Neutral 😶') 
 
