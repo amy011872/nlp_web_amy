@@ -19,3 +19,8 @@ body {
     border-radius: 1em;
     background-color: rgb(146, 181, 212);
 }
+
+#lyrics:hover {
+    background-color: rgba(146, 181, 212, 0.7);
+
+}
