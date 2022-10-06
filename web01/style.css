@@ -1,0 +1,21 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin: auto;
+    border-radius: 1em;
+    background-color: aliceblue;
+}
+
+#lyrics {
+    color: rgb(36, 45, 53);
+    width: 500px;
+    padding: 1em;
+    margin: auto;
+    border-radius: 1em;
+    background-color: rgb(146, 181, 212);
+}
