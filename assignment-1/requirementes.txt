@@ -1,3 +1,13 @@
 ckip_transformers.nlp
 torch
 CwnGraph
+numpy
+os
+re
+json
+pandas
+PIL
+snownlp
+seaborn
+matplotlib
+lib2to3.pgen2
