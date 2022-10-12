@@ -125,3 +125,73 @@ def cwn_tagged(lemma):
 def load_image(image_file):
 	img = Image.open(image_file)
 	return img
+
+'''
+    st.markdown('#### 搜尋 Search')
+    with st.form(key='searchForm'):
+        search_word = st.text_input('請輸入搜尋字詞')
+        window = st.slider('要選擇多大的 window size?', 1, 10, 1)
+        btn = st.form_submit_button(label='Search')
+ 
+        if btn:
+            step2, display2 = st.columns([1, 4])
+            step3, display3 = st.columns([1, 4])
+            step4, display4 = st.columns([1, 4])
+            step5, display5 = st.columns([1, 4])
+            step6, display6 = st.columns([1, 4])
+                
+            with step2:
+                st.markdown('#### 相關文章')
+            with display2:
+                output = []
+                for cont in food_cont:
+                    for idx, con in enumerate(cont):
+                        if re.search(search_word, con):
+                            before = idx - window
+                            after = idx + window + 1
+                            output.append(cont[before:after])
+                st.write(f'## 搜尋結果：共有{len(output)}筆搜尋結果。')
+                for out in output:
+                    st.write(out)
+
+                                
+            with step3:
+                st.markdown('#### CKIP 斷詞系統 (Tokenization)')
+            with display3:
+                for out in output:
+                    tokenized = ckipped_ws(out)
+                    st.write(tokenized)
+                
+            with step4:
+                st.markdown('#### CKIP 詞類標記 (Part-of-Speech Tagging)')
+            with display4:
+                for out in output:
+                    tokenized = ckipped_ws(out)
+                    pos = ckipped_pos(tokenized)
+                    st.write(pos)
+
+            with step5:
+                st.markdown('#### CKIP 命名實體 (Named Entity Recognition)')
+            with display5:
+                ner_words, ner_types = [], []
+                for out in output:
+                    ner_word, ner_type = ckipped_ner(out)
+                    ner_words.append(ner_word)
+                    ner_types.append(ner_type)
+                for ner_word in ner_words:
+                    for i in range(len(ner_word)):
+                        ent = (ner_word[i], ' (', ner_type[i], ')')
+                        entj = ''.join(ent)
+                        st.write(entj)
+
+            with step6:
+                st.markdown('#### CWN 詞意自動標記 (Sense Tagging)')
+            with display6:
+                st.write('to be continued...')
+         #   word = tokenized.split(' ')
+          # senses, num_of_sense = [], []
+            #for w in word:
+         #       s, ns = cwn_tagged(w)
+             #   st.write('詞意數量:', ns)
+              #  st.write('詞意條目:', s)
+              '''
