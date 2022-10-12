@@ -8,7 +8,6 @@ ckip-transformers==0.3.2
 torch
 numpy
 pandas
-PIL
 snownlp
 seaborn
 matplotlib
