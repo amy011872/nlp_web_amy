@@ -1,5 +1,5 @@
 lib2to3.pgen2
-ckip_transformers.nlp
+ckip_transformers
 torch
 CwnGraph
 numpy
