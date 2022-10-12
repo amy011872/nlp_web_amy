@@ -6,9 +6,8 @@ python-dotenv==0.20.0
 cwnsensetagger==0.1.6
 ckip-transformers==0.3.2
 torch
-
 numpy
-os
+glob
 re
 json
 pandas
