@@ -239,25 +239,24 @@ if choice == 'Food':
                 st.write(f'## 搜尋結果：共有{len(output)}筆搜尋結果。')
 
                 n = 1
-                for out in output[:5]:
+                for out in output[0]:
                     if len(out) == 0:
                         pass
                     else:
-                        st.write(f'### --------------------第{n}筆搜尋結果--------------------')
-                        res = [cwn_tagged(o) for o in out]
-                        st.write(' '.join(res))
-        
+                        st.write(f'#### --------------------第{n}筆搜尋結果--------------------')
+                        for o in out:
+                            st.write(cwn_tagged(o))
                         st.markdown('### 情感分析 Sentiment Analysis (by sentence)')
                         senti_df = snow_analyze(out)
                         st.table(senti_df)
                         make_senti_plot(senti_df)
                         n += 1
                 with st.expander('更多結果請按此查詢'):
-                    for out in output[6:]:
+                    for out in output[1:]:
                         if len(out) == 0:
                             pass
                         else:
-                            st.write(f'--------------------第{n}筆搜尋結果--------------------')
+                            st.write(f'#### --------------------第{n}筆搜尋結果--------------------')
                             st.write(''.join(out))
                             n += 1
            # tagged_df = cwn_tagged(search_word)
