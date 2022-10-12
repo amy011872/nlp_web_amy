@@ -7,7 +7,7 @@ cwnsensetagger==0.1.6
 ckip-transformers==0.3.2
 torch
 numpy
-glob
+pathlib
 re
 json
 pandas

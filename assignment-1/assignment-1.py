@@ -7,7 +7,7 @@ import streamlit as st
 from ckip_transformers.nlp import CkipWordSegmenter, CkipPosTagger, CkipNerChunker
 import torch
 import json
-import glob
+from pathlib import Path
 import re
 import pandas as pd
 from PIL import Image
@@ -151,8 +151,10 @@ def load_image(image_file):
 # ptt dataset
 #horror_jsons = os.listdir("./data/Horror/2020")
 #food_jsons = os.listdir("./data/Food/2020")
-horror_jsons = glob.glob("./data/Horror/2020/*")
-food_jsons = glob.glob("./data/Food/2020/*")
+#horror_jsons = glob.glob("./data/Horror/2020/*")
+#food_jsons = glob.glob("./data/Food/2020/*")
+horror_jsons = Path('./data/Horror/2020/')
+food_jsons = Path('./data/Food/2020/')
 
 
 # start designing layout
@@ -167,12 +169,13 @@ if choice == 'Food':
     
     n_file = 0
     food_cont = []
-    for food in food_jsons:
-        #filenames = (f"./data/Food/2020/{food}")
-        files = load_json(food)
-        cont = extract_content(files)
-        food_cont.append(food)
-        n_file += 1
+    for food in list(food_jsons.iterdir()):
+        if food.exists():
+            filenames = (f"./{food}")
+            files = load_json(filenames)
+            cont = extract_content(files)
+            food_cont.append(food)
+            n_file += 1
     st.success(f"Successfully load {n_file} posts from PTT Food Forum (2020)")
 
    # st.write('資料取自PTT Food版共7718篇貼文（2020）')
@@ -253,11 +256,13 @@ if choice == 'Food':
 if choice == 'Horror':
     #st.write('資料取自PTT Horror版共194篇貼文（2020）')
     horror_cont = []
-    for horror in horror_jsons:
-        #filenames = (f"./data/Horror/2020/{horror}")
-        files = load_json(horror)
-        cont = extract_content(files)
-        horror_cont.append(cont)
+    for horror in list(horror_jsons.iterdir()):
+        if horror.exists():
+            filenames = (f"./{horror}")
+            files = load_json(filenames)
+            cont = extract_content(files)
+            horror_cont.append(cont)
+
     st.success(f"Successfully load {len(horror_cont)} posts from PTT Horror Forum (2020)")
 
     c = st.container()
