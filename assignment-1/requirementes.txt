@@ -1,3 +1,4 @@
+lib2to3.pgen2
 ckip_transformers.nlp
 torch
 CwnGraph
@@ -10,4 +11,3 @@ PIL
 snownlp
 seaborn
 matplotlib
-lib2to3.pgen2
