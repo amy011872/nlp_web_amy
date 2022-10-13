@@ -189,6 +189,35 @@ def load_image(image_file):
 horror_jsons = os.listdir("assignment-1/data/Horror/2020")
 food_jsons = os.listdir("assignment-1/data/Food/2020")
 
+# ptt contents and titles extraction
+food_file = 0
+food_cont, food_title = [], []
+for food in food_jsons:
+    filenames = (f"assignment-1/data/Food/2020/{food}")
+    files = load_json(filenames)
+    cont = extract_content(files)
+    titl = extract_title(files)
+    food_cont.append(cont)
+    food_title.append(titl)
+    food_file += 1
+title_keys = []
+for title in food_title:
+    for t in title:
+        matched = re.search('\[.+\]', t)
+        try:
+            title_keys.append(matched[0])
+        except:pass
+counter = Counter(title_keys).most_common(10)
+k, c = [], []
+for con in counter:
+    k.append(con[0])
+    c.append(con[1])
+kcdf = pd.DataFrame({
+        'Keyword':k,
+        'Count':c
+    })
+food_freq = calculate_freq(food_cont)
+
 # start designing layout
 st.set_page_config(layout="wide")
 st.title('中文NLP管線處理：以批踢踢語料庫Food版和Horror版為例')
@@ -199,38 +228,11 @@ choice = st.sidebar.selectbox("PTT Boards", menu)
 
 if choice == 'Food':
     
-    n_file = 0
-    food_cont, food_title = [], []
-    for food in food_jsons:
-        filenames = (f"assignment-1/data/Food/2020/{food}")
-        files = load_json(filenames)
-        cont = extract_content(files)
-        titl = extract_title(files)
-        food_cont.append(cont)
-        food_title.append(titl)
-        n_file += 1
-    st.success(f"Successfully load {n_file} posts from PTT Food Forum (2020)")
-    title_keys = []
-    for title in food_title:
-        for t in title:
-            matched = re.search('\[.+\]', t)
-            try:
-                title_keys.append(matched[0])
-            except:
-                pass
-    counter = Counter(title_keys).most_common(10)
-    k, c = [], []
-    for con in counter:
-        k.append(con[0])
-        c.append(con[1])
-    kcdf = pd.DataFrame({
-        'Keyword':k,
-        'Count':c
-    })
+    st.success(f"Successfully load {food_file} posts from PTT Food Forum (2020)")
+    
     st.markdown('### Top 10 Titles in PTT Food Board')
     st.table(kcdf)
 
-    food_freq = calculate_freq(food_cont)
     st.markdown('### Top 100 Most Frequent Words in PPT Food Board')
     st.table(food_freq)
 
