@@ -111,9 +111,18 @@ def calculate_freq(cont):
     })
 
     return df
-
 def snow_analyze(rawText):
-    
+    scores = []
+    for text in rawText:
+        res = SnowNLP(text)
+        scores.append(res.sentiments)
+    df = pd.DataFrame({
+        'Sentence':rawText,
+        'Score':scores
+        })
+    return df
+
+def snow_analyze2(rawText):
     scores, tagged_sent = [], []
     for text in rawText:
         if len(text) != 0:
