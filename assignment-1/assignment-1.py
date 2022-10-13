@@ -169,7 +169,7 @@ if choice == 'Food':
     n_file = 0
     food_cont, food_title = [], []
     for food in food_jsons:
-        filenames = (f"./data/Food/2020/{food}")
+        filenames = (f"assignment-1/data/Food/2020/{food}")
         files = load_json(filenames)
         cont = extract_content(files)
         titl = extract_title(files)
@@ -251,7 +251,7 @@ if choice == 'Horror':
     #for horror in list(horror_jsons.iterdir()):
       #  if horror.exists():
     for horror in horror_jsons:
-        filenames = (f"./data/Horror/2020/{horror}")
+        filenames = (f"assignment-1/data/Horror/2020/{horror}")
         files = load_json(filenames)
         cont = extract_content(files)
         titl = extract_title(files)
