@@ -195,7 +195,7 @@ if choice == 'Food':
         'Count':c
     })
     st.markdown('### Top 10 Titles')
-    st.dataframe(kcdf)
+    st.table(kcdf)
 
     with st.form(key='test'):
         search_word = st.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
