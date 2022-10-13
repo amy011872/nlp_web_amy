@@ -197,13 +197,14 @@ if choice == 'Food':
     st.markdown('### Top 10 Titles in PTT Food Board')
     st.table(kcdf)
 
+
+
     with st.form(key='test'):
         search_word = st.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
         window = st.slider('要選擇多大的 window size?', 5, 10, 1)
         buttn = st.form_submit_button(label='Search')
         if buttn:
-            with st.spinner('Loading models...'):
-                cwn_warmup()
+
             c2 = st.container()
             with c2:
                 output = []
