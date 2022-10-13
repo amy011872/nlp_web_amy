@@ -146,7 +146,7 @@ def make_senti_plot(df):
     fig = plt.figure(figsize=(20, 5))
     plt.title('Sentiment Scores Plot')
     plt.xticks(fontsize = 20, rotation = 90)
-    sns.barplot( x = 'sentence', y = 'score', data = df, palette = "pastel")
+    sns.barplot( x = 'Sentence', y = 'Score', data = df, palette = "pastel")
     st.pyplot(fig)
     
 # ckip tokenization
