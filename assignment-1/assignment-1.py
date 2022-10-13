@@ -153,8 +153,8 @@ def load_image(image_file):
 
 
 # ptt dataset
-horror_jsons = os.listdir("./assignment-1/data/Horror/2020")
-food_jsons = os.listdir("./data/Food/2020")
+horror_jsons = os.listdir("assignment-1/data/Horror/2020")
+food_jsons = os.listdir("assignment-1/data/Food/2020")
 
 # start designing layout
 st.set_page_config(layout="wide")
