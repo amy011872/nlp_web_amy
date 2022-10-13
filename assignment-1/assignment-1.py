@@ -270,12 +270,12 @@ if choice == 'Food':
 
                 # print the firs post as example
                 st.write('#### --------------------第1筆搜尋結果--------------------')
+                st.write(example)
                 st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
                 try:
                     for ex in example:
                         st.write(cwn_tagged(ex))
-                except:
-                    st.write(ex)
+                except:pass
                 st.markdown('### 逐句情感分析 Sentiment Analysis (by sentence)')
                 senti_df = snow_analyze(example)
                 st.table(senti_df)
