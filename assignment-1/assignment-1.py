@@ -87,14 +87,19 @@ def extract_content(json_data):
 
 def snow_analyze(rawText):
     
-    scores = []
+    scores, tagged_sent = [], []
     for text in rawText:
         res = SnowNLP(text)
         scores.append(res.sentiments)
+        tagged = distil_tagger.tag(text)
+        for tag in tagged:
+            for t in tag:
+                out = t[0], ' (', t[1], ')'
+                output.append(''.join(out))
 
     df = pd.DataFrame({
-        'sentence':rawText,
-        'score':scores
+        'Sentence':' '.join(output),
+        'Senti_score':scores
         })
 
     return df
@@ -203,7 +208,7 @@ if choice == 'Food':
 
     with st.form(key='test'):
         col1, col2 = st.columns(2)
-        search_word = col1.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
+        search_word = col1.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：好吃、難吃、台北、客家')
         window = col2.slider('要選擇多大的 window size?', 5, 10, 1)
         buttn = st.form_submit_button(label='Search')
         if buttn:
