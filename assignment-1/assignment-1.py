@@ -153,17 +153,12 @@ def load_image(image_file):
 
 
 # ptt dataset
-horror_jsons = os.listdir("./data/Horror/2020")
+horror_jsons = os.listdir("./assignment-1/data/Horror/2020")
 food_jsons = os.listdir("./data/Food/2020")
-#horror_jsons = glob.glob("./data/Horror/2020/*")
-#food_jsons = glob.glob("./data/Food/2020/*")
-#horror_jsons = Path('./data/Horror/2020/')
-#food_jsons = Path('./data/Food/2020/')
-
 
 # start designing layout
 st.set_page_config(layout="wide")
-st.title('中文NLP管線處理')
+st.title('中文NLP管線處理：以批踢踢語料庫Food版和Horror版為例')
 st.caption('Streamlit project   r10142008 周昕妤')
 
 menu = ['Food', 'Horror', 'img']
@@ -173,8 +168,6 @@ if choice == 'Food':
     
     n_file = 0
     food_cont, food_title = [], []
-    #for food in list(food_jsons.iterdir()):
-    #    if food.exists():
     for food in food_jsons:
         filenames = (f"./data/Food/2020/{food}")
         files = load_json(filenames)
@@ -227,7 +220,6 @@ if choice == 'Food':
                 more_info = output[1:]
 
                 # print the firs post as example
-                
                 st.write('#### --------------------第1筆搜尋結果--------------------')
                 st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
                 for ex in example:
@@ -253,26 +245,45 @@ if choice == 'Food':
                             senti_df = snow_analyze(out)
                             st.table(senti_df)
                             make_senti_plot(senti_df)
-                            n += 1
-           # tagged_df = cwn_tagged(search_word)
-           # st.table(tagged_df)
-
 
 if choice == 'Horror':
-    horror_cont = []
-    for horror in list(horror_jsons.iterdir()):
-        if horror.exists():
-            filenames = (f"./{horror}")
-            files = load_json(filenames)
-            cont = extract_content(files)
-            horror_cont.append(cont)
+    horror_cont, horror_title = [], []
+    #for horror in list(horror_jsons.iterdir()):
+      #  if horror.exists():
+    for horror in horror_jsons:
+        filenames = (f"./data/Horror/2020/{horror}")
+        files = load_json(filenames)
+        cont = extract_content(files)
+        titl = extract_title(files)
+        horror_cont.append(cont)
+        horror_title.append(titl)
     st.success(f"Successfully load {len(horror_cont)} posts from PTT Horror Forum (2020)")
+
+    title_keys = []
+    for title in horror_title:
+        for t in title:
+            matched = re.search('\[.+\]', t)
+            try:
+                title_keys.append(matched[0])
+            except:
+                pass
+    counter = Counter(title_keys).most_common(10)
+    k, c = [], []
+    for con in counter:
+        k.append(con[0])
+        c.append(con[1])
+    kcdf = pd.DataFrame({
+        'Keyword':k,
+        'Count':c
+    })
+    st.markdown('### Top 10 Titles')
+    st.table(kcdf)
 
     c = st.container()
     with c:
         with st.form(key='searchForm'):
             search_word = st.text_input('請輸入搜尋字詞')
-            window = st.slider('要選擇多大的 window size?', 1, 10, 1)
+            window = st.slider('要選擇多大的 window size?', 5, 10, 1)
             btn = st.form_submit_button(label='提交')
 
             if btn:
@@ -288,40 +299,37 @@ if choice == 'Horror':
 
                     st.write(f'## 搜尋結果：共有{len(output)}筆搜尋結果。')
 
-                    n = 1
-                    for out in output[:5]:
-                        if len(out) == 0:
-                            pass
-                        else:
-                            st.write(f'### --------------------第{n}筆搜尋結果--------------------')
-                            st.write(''.join(out))
-                            checked = st.checkbox('情感分析 Sentiment Analysis (by sentence)', key=n)
-                            if checked:
-                                senti_df = snow_analyze(out)
-                                st.table(senti_df)
-                                make_senti_plot(senti_df)
-                            n += 1
+
+                    example = output[0]
+                    more_info = output[1:]
+
+                    # print the firs post as example
+                    st.write('#### --------------------第1筆搜尋結果--------------------')
+                    st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
+                    for ex in example:
+                        st.write(cwn_tagged(ex))
+                    st.markdown('### 逐句情感分析 Sentiment Analysis (by sentence)')
+                    senti_df = snow_analyze(example)
+                    st.table(senti_df)
+                    make_senti_plot(senti_df)
+
+                    n = 2
                     with st.expander('更多結果請按此查詢'):
-                        for out in output[6:]:
+                        for out in output[1:]:
                             if len(out) == 0:
                                 pass
                             else:
-                                st.write(f'--------------------第{n}筆搜尋結果--------------------')
-                                st.write(''.join(out))
+                                st.write(f'#### --------------------第{n}筆搜尋結果--------------------')
+                                st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
+                                try:
+                                    for o in out:
+                                        st.write(cwn_tagged(o))
+                                except:pass
+                                st.markdown('### 情感分析 Sentiment Analysis (by sentence)')
+                                senti_df = snow_analyze(out)
+                                st.table(senti_df)
+                                make_senti_plot(senti_df)
                                 n += 1
-
-                c3 = st.container()
-                with c3:
-
-                    st.markdown('## 情感分析 Sentiment Analysis (by sentence)')
-                    num_post = st.slider("選擇欲分析的貼文：", 1, len(output), 1)
-
-                    if num_post:
-                        #visualized = st.checkbox('情感分析視覺化')
-                        senti_df = snow_analyze(output[num_post-1])
-                        st.table(senti_df)
-                        make_senti_plot(senti_df)
-                        
 
 
 
