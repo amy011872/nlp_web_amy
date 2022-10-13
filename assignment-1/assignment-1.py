@@ -236,9 +236,8 @@ if choice == 'Food':
     st.markdown('### Top 100 Most Frequent Words in PPT Food Board')
     st.table(food_freq)
 
-
-
     with st.form(key='test'):
+        st.markdown("### Let's search!")
         col1, col2 = st.columns(2)
         search_word = col1.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：好吃、難吃、台北、客家')
         window = col2.slider('要選擇多大的 window size?', 5, 10, 1)
@@ -329,6 +328,7 @@ if choice == 'Horror':
 
     c = st.container()
     with c:
+        st.markdown("### Let's search!")
         with st.form(key='searchForm'):
             search_word = st.text_input('請輸入搜尋字詞')
             window = st.slider('要選擇多大的 window size?', 5, 10, 1)
