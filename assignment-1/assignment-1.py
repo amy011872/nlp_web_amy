@@ -91,7 +91,7 @@ def calculate_freq(cont):
         for c in con:
             try:
                 if len(c) != 0:
-                    tagged = tagger.tag(c)
+                    tagged = distil_tagger.tag(c)
                     for tag in tagged:
                         for t in tag:
                             if len(t) != 0:     
@@ -270,7 +270,7 @@ if choice == 'Food':
 
                 # print the firs post as example
                 st.write('#### --------------------第1筆搜尋結果--------------------')
-                st.write(example)
+                st.write(''.join(example))
                 st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
                 try:
                     for ex in example:
@@ -362,6 +362,7 @@ if choice == 'Horror':
 
                     # print the first post as example
                     st.write('#### --------------------第1筆搜尋結果--------------------')
+                    st.write(''.join(example))
                     st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
                     for ex in example:
                         st.write(cwn_tagged(ex))
