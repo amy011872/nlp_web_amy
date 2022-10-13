@@ -85,20 +85,48 @@ def extract_content(json_data):
             contents.remove(con)   
     return contents    
 
+def calculate_freq(cont):
+    output = []
+    for con in cont:
+        for c in con:
+            try:
+                if len(c) != 0:
+                    tagged = tagger.tag(c)
+                    for tag in tagged:
+                        for t in tag:
+                            if len(t) != 0:     
+                                out = t[0], ' (', t[1], ')'
+                                output.append(''.join(out))
+            except:
+                pass
+    counter = Counter(output).most_common(100)
+    k, c = [], []
+    for con in counter:
+        k.append(con[0])
+        c.append(con[1])
+
+    df = pd.DataFrame({
+        'Word':k,
+        'Frequency':c
+    })
+
+    return df
+
 def snow_analyze(rawText):
     
     scores, tagged_sent = [], []
     for text in rawText:
-        res = SnowNLP(text)
-        scores.append(res.sentiments)
-        tagged = distil_tagger.tag(text)
-        for tag in tagged:
-            for t in tag:
-                out = t[0], ' (', t[1], ')'
-                output.append(''.join(out))
+        if len(text) != 0:
+            res = SnowNLP(text)
+            scores.append(res.sentiments)
+            tagged = distil_tagger.tag(text)
+            for tag in tagged:
+                for t in tag:
+                    out = t[0], ' (', t[1], ')'
+                    tagged_sent.append(''.join(out))
 
     df = pd.DataFrame({
-        'Sentence':' '.join(output),
+        'Sentence':' '.join(tagged_sent),
         'Senti_score':scores
         })
 
@@ -202,7 +230,9 @@ if choice == 'Food':
     st.markdown('### Top 10 Titles in PTT Food Board')
     st.table(kcdf)
 
-
+    food_freq = calculate_freq(food_cont)
+    st.markdown('### Top 100 Most Frequent Words in PPT Food Board')
+    st.table(food_freq)
 
 
 
@@ -291,6 +321,10 @@ if choice == 'Horror':
     st.markdown('### Top 10 Titles in Horror Board')
     st.table(kcdf)
 
+    horror_freq = calculate_freq(horror_cont)
+    st.markdown('### Top 100 Most Frequent Words in PPT Horror Board')
+    st.table(horror_freq)
+
     c = st.container()
     with c:
         with st.form(key='searchForm'):
@@ -315,7 +349,7 @@ if choice == 'Horror':
                     example = output[0]
                     more_info = output[1:]
 
-                    # print the firs post as example
+                    # print the first post as example
                     st.write('#### --------------------第1筆搜尋結果--------------------')
                     st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
                     for ex in example:
