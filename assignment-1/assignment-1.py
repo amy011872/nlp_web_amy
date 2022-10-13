@@ -147,21 +147,6 @@ def cwn_tagged(sent):
     output = ' '.join(output)
     return output
 
-# cwn sense tagger (CwnGraph)
-def cwn_tagged2(lemma):
-    if cwn_tagger is None:
-       print('re-initializing ckip...')
-       cwn_warmup()
-    
-    tagged = cwn_tagger.find_lemma(lemma)
-    if len(tagged) > 0:
-        senses = tagged[0].senses
-        num_of_sense = len(senses)
-        return senses, num_of_sense
-
-    else:
-        return('No results')
-
 def load_image(image_file):
 	img = Image.open(image_file)
 	return img
@@ -221,7 +206,7 @@ if choice == 'Food':
 
     with st.form(key='test'):
         search_word = st.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
-        window = st.slider('要選擇多大的 window size?', 1, 10, 1)
+        window = st.slider('要選擇多大的 window size?', 5, 10, 1)
         buttn = st.form_submit_button(label='Search')
         if buttn:
             with st.spinner('Loading models...'):
@@ -238,26 +223,36 @@ if choice == 'Food':
 
                 st.write(f'## 搜尋結果：共有{len(output)}筆搜尋結果。')
 
-                n = 1
-                for out in output[0]:
-                    if len(out) == 0:
-                        pass
-                    else:
-                        st.write(f'#### --------------------第{n}筆搜尋結果--------------------')
-                        for o in out:
-                            st.write(cwn_tagged(o))
-                        st.markdown('### 情感分析 Sentiment Analysis (by sentence)')
-                        senti_df = snow_analyze(out)
-                        st.table(senti_df)
-                        make_senti_plot(senti_df)
-                        n += 1
+                example = output[0]
+                more_info = output[1:]
+
+                # print the firs post as example
+                
+                st.write('#### --------------------第1筆搜尋結果--------------------')
+                st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
+                for ex in example:
+                    st.write(cwn_tagged(ex))
+                st.markdown('### 逐句情感分析 Sentiment Analysis (by sentence)')
+                senti_df = snow_analyze(example)
+                st.table(senti_df)
+                make_senti_plot(senti_df)
+
+                n = 2
                 with st.expander('更多結果請按此查詢'):
                     for out in output[1:]:
                         if len(out) == 0:
                             pass
                         else:
                             st.write(f'#### --------------------第{n}筆搜尋結果--------------------')
-                            st.write(''.join(out))
+                            st.markdown('### 斷詞及詞性標記 Tokenization and Part-of-Speech Tagging')
+                            try:
+                                for o in out:
+                                    st.write(cwn_tagged(o))
+                            except:pass
+                            st.markdown('### 情感分析 Sentiment Analysis (by sentence)')
+                            senti_df = snow_analyze(out)
+                            st.table(senti_df)
+                            make_senti_plot(senti_df)
                             n += 1
            # tagged_df = cwn_tagged(search_word)
            # st.table(tagged_df)
