@@ -1,5 +1,5 @@
 # r10142008 周昕妤 
-# stream cloud link: 
+# stream cloud link: https://amy011872-nlp-web-amy-assignment-1assignment-1-ycg898.streamlitapp.com/ 還不能用！！ＱＱ
 
 from lib2to3.pgen2 import token
 from numpy import disp, outer
@@ -194,7 +194,7 @@ if choice == 'Food':
         'Keyword':k,
         'Count':c
     })
-    st.markdown('### Top 10 Titles')
+    st.markdown('### Top 10 Titles in PTT Food Board')
     st.table(kcdf)
 
     with st.form(key='test'):
@@ -279,7 +279,7 @@ if choice == 'Horror':
         'Keyword':k,
         'Count':c
     })
-    st.markdown('### Top 10 Titles')
+    st.markdown('### Top 10 Titles in Horror Board')
     st.table(kcdf)
 
     c = st.container()
@@ -338,7 +338,7 @@ if choice == 'Horror':
 
 
     if choice == 'img':
-        st.title("Image")
+        st.title("Upload an Image")
         image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg"])
 
         if image_file is not None:
