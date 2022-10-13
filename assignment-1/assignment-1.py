@@ -199,9 +199,12 @@ if choice == 'Food':
 
 
 
+
+
     with st.form(key='test'):
-        search_word = st.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
-        window = st.slider('要選擇多大的 window size?', 5, 10, 1)
+        col1, col2 = st.columns(2)
+        search_word = col1.text_input('請輸入搜尋字詞（可根據上表排名搜尋相關美食資訊！） 例如：')
+        window = col2.slider('要選擇多大的 window size?', 5, 10, 1)
         buttn = st.form_submit_button(label='Search')
         if buttn:
 
